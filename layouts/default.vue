@@ -28,12 +28,9 @@
             :key="item.text"
             link
           >
-            <v-list-item-avatar>
-              <img
-                :src="`https://randomuser.me/api/portraits/men/${item.picture}.jpg`"
-                alt=""
-              >
-            </v-list-item-avatar>
+            <v-list-item-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-action>
             <v-list-item-title v-text="item.text" />
           </v-list-item>
         </v-list>
@@ -48,7 +45,7 @@
         </v-list-item>
         <v-list-item link>
           <v-list-item-action>
-            <v-icon color="grey darken-1">mdi-settings</v-icon>
+            <v-icon color="grey darken-1">mdi-home</v-icon>
           </v-list-item-action>
           <v-list-item-title class="grey--text text--darken-1"></v-list-item-title>
         </v-list-item>
@@ -69,7 +66,7 @@
         mdi-youtube
       </v-icon>
       <v-toolbar-title class="mr-12 align-center">
-        <span class="title">洹洹和恬恬的小屋</span>
+        <span class="title">LLLin视频网站</span>
       </v-toolbar-title>
       <v-spacer />
       <v-row
@@ -101,30 +98,54 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      source: String,
-    },
-    data: () => ({
-      drawer: null,
-      items: [
-        { icon: 'mdi-home', text: '首页',link:'/' },
-        { icon: 'mdi-trending-up', text: '热门评论',link:'/HotComment' },
-        { icon: 'mdi-youtube-subscription', text: '热门视频',link:'/HotVideo' },
-        { icon: 'mdi-history', text: '观看历史' },
-        { icon: 'mdi-playlist-play', text: '视频列表' },
-        { icon: 'mdi-clock', text: '最近观看' },
-      ],
-      items2: [
-        // { picture: 28, text: 'Joseph' },
-        // { picture: 38, text: 'Apple' },
-        // { picture: 48, text: 'Xbox Ahoy' },
-        // { picture: 58, text: 'Nokia' },
-        // { picture: 78, text: 'MKBHD' },
-      ],
-    }),
-    created () {
-      this.$vuetify.theme.dark = true
-    },
-  }
+
+// 引入部分icon
+ 
+
+    export default {
+        props: {
+            source: String, 
+        },
+        data: () => ({
+            drawer: null,
+            items: [{
+                icon: 'mdi-home',
+                text: '首页',
+                link: '/'
+            }, {
+                icon: 'mdi-trending-up',
+                text: '热门评论',
+                link: '/HotComment'
+            }, {
+                icon: 'mdi-youtube-subscription',
+                text: '热门视频',
+                link: '/HotVideo'
+            }, {
+                icon: 'mdi-history',
+                text: '观看历史'
+            }, {
+                icon: 'mdi-playlist-play',
+                text: '视频列表'
+            }, {
+                icon: 'mdi-clock',
+                text: '最近观看'
+            }, ],
+            items2: [{
+                icon: 'mdi-account',
+                text: '个人中心',
+                link: '/profile'
+            },{
+                icon: 'mdi-message-text',
+                text: '消息中心',
+                link: '/HotComment'
+            }, {
+                icon: 'mdi-domain',
+                text: '积分商城',
+                link: '/HotComment'
+            }],
+        }),
+        created() {
+            this.$vuetify.theme.dark = true
+        },
+    }
 </script>

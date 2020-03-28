@@ -7,3 +7,15 @@
 .page-leave-active {
     opacity: 0;
 }
+
+//点击去除蓝色边框
+ :focus {
+    outline: none
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    border: none;
+}

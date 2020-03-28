@@ -6,14 +6,14 @@
     <v-row>
       <v-col md="4" v-for="item in courses" :key="item._id">
         <v-card :to="`HotVideo/${item._id}`" class="mx-auto single-card" max-width="350">
-          <v-img :src="item.videoCover" height="200px"></v-img>
+          <v-img :src="item.cover" height="200px"></v-img>
 
           <v-card-title>
-            {{item.videoName}}
+            {{item.name}}
           </v-card-title>
 
           <v-card-subtitle>
-            {{item.videoContent}}
+            {{item.name}}
           </v-card-subtitle>
 
           <v-card-actions>
