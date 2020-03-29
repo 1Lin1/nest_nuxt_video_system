@@ -12,9 +12,9 @@
     </v-select>
 
     <!-- 视频窗口 -->
-    <div style="border:1px solid #000000"> 
+    <div style="margin-bottom:200px"> 
       <video 
-    
+    class="pa-3"
     :src="episode.file"
     width="100%"
     height="100%"
