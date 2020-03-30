@@ -80,6 +80,8 @@
           append-icon="mdi-magnify"
           color="white"
           hide-details
+          @click:append="searchBtn"
+          clearable
         />
       </v-row>
     </v-app-bar>
@@ -126,10 +128,7 @@
             }, {
                 icon: 'mdi-playlist-play',
                 text: '视频列表'
-            }, {
-                icon: 'mdi-clock',
-                text: '最近观看'
-            }, ],
+            } ],
             items2: [{
                 icon: 'mdi-account',
                 text: '个人中心',
@@ -147,5 +146,10 @@
         created() {
             this.$vuetify.theme.dark = true
         },
+        methods:{
+          searchBtn(){
+            console.log('click')
+          }
+        }
     }
 </script>
