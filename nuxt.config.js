@@ -50,10 +50,30 @@ export default {
     modules: [
         // Doc: https://axios.nuxtjs.org/usage
         '@nuxtjs/axios',
+
+        //登录token相关
+        '@nuxtjs/auth',
         // '@nuxtjs/pwa',
         // Doc: https://github.com/nuxt-community/dotenv-module
         '@nuxtjs/dotenv',
     ],
+
+
+
+    auth: {
+        strategies: {
+            local: {
+                endpoints: {
+                    login: { url: '/auth/login', method: 'post', },
+                    logout: { url: '/auth/logout', method: 'post' },
+                    user: { url: '/auth/user', method: 'get', propertyName: false }
+                },
+                // tokenRequired: true,
+                // tokenType: 'bearer'
+                // autoFetchUser: true
+            }
+        }
+    },
     /*
      ** Axios module configuration
      ** See https://axios.nuxtjs.org/options

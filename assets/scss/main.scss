@@ -1,6 +1,6 @@
 .page-enter-active,
 .page-leave-active {
-    transition: opacity .4s;
+    transition: opacity .3s;
 }
 
 .page-enter,
@@ -18,4 +18,10 @@ html {
     margin: 0;
     padding: 0;
     border: none;
+}
+
+a,
+a:visited {
+    text-decoration: none;
+    color: #ffffff;
 }
