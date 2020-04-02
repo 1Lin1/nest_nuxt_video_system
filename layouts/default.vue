@@ -21,7 +21,12 @@
           >SUBSCRIPTIONS</v-subheader
         >
         <v-list v-show="loadStatus">
-          <v-list-item v-for="item in items2" :key="item.text" link>
+          <v-list-item
+            v-for="item in items2"
+            :key="item.text"
+            :to="item.link"
+            link
+          >
             <v-list-item-action>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
@@ -40,13 +45,17 @@
 
         <v-list-item v-else="" class="mt-4" @click="isShowLoginForm = true">
           <v-list-item-action>
-            <v-icon color="darken-1">mdi-lock</v-icon>
+            <v-icon color="darken-1">mdi-send</v-icon>
           </v-list-item-action>
           <v-list-item-title class=" text--darken-1">登录</v-list-item-title>
         </v-list-item>
 
         <!-- 注册模块 -->
-        <v-list-item class="mt-4" @click="isShowRegisterForm = true">
+        <v-list-item
+          class="mt-4"
+          @click="isShowRegisterForm = true"
+          v-show="!loadStatus"
+        >
           <v-list-item-action>
             <v-icon color="darken-1">mdi-dialpad</v-icon>
           </v-list-item-action>
@@ -56,7 +65,7 @@
         </v-list-item>
 
         <!-- 退出 -->
-        <v-list-item @click="loginOut">
+        <v-list-item @click="loginOut" v-show="loadStatus">
           <v-list-item-action>
             <v-icon color="darken-1">mdi-arrow-up-bold-box-outline</v-icon>
           </v-list-item-action>
@@ -112,6 +121,10 @@
         </v-col>
       </v-row>
 
+      <!-- 提示 -->
+      <v-tooltip v-model="showTip" top>
+        <h3 class="show-tip-message">{{ showTipMessage }}</h3>
+      </v-tooltip>
       <!-- 展示登录界面 -->
 
       <div class="text-center">
@@ -164,7 +177,7 @@
               </v-btn>
               <v-row>
                 <v-col>
-                  <a href="">未有账号?去注册</a>
+                  <p @click="noAcoToRegister">未有账号?去注册</p>
                 </v-col>
               </v-row>
             </v-form>
@@ -173,63 +186,64 @@
       </div>
 
       <!-- 展示注册界面 -->
-      <div class="text-center">
-        <v-bottom-sheet v-model="isShowRegisterForm" inset>
-          <v-sheet class="text-center" height="350px">
+
+      <v-bottom-sheet v-model="isShowRegisterForm" inset>
+        <v-sheet class="text-center" height="350px">
+          <v-btn
+            class="mt-6"
+            text
+            color="error"
+            @click="isShowRegisterForm = !isShowRegisterForm"
+            >close</v-btn
+          >
+
+          <v-form
+            @submit.prevent="register"
+            class="pa-4"
+            ref="form"
+            v-model="valid"
+            :lazy-validation="lazy"
+          >
+            <v-text-field
+              v-model="registerModel.username"
+              :rules="emailRules"
+              label="用户名/邮箱"
+              required
+            ></v-text-field>
+
+            <v-text-field
+              v-model="registerModel.password"
+              :rules="passwordRules"
+              label="密码"
+              autocomplete="new-password"
+              type="password"
+              required
+            ></v-text-field>
+
+            <v-text-field
+              v-model="registerModel.confirmPass"
+              :rules="[passwordRules2]"
+              label="确认密码"
+              autocomplete="new-password"
+              type="password"
+              required
+            ></v-text-field>
+
             <v-btn
-              class="mt-6"
-              text
-              color="error"
-              @click="isShowRegisterForm = !isShowRegisterForm"
-              >close</v-btn
+              :disabled="!valid"
+              color="success"
+              class="mr-4"
+              type="submit"
+              large
+              rounded
             >
+              注册
+            </v-btn>
+          </v-form>
+        </v-sheet>
+      </v-bottom-sheet>
 
-            <v-form
-              @submit.prevent="register"
-              class="pa-4"
-              ref="form"
-              v-model="valid"
-              :lazy-validation="lazy"
-            >
-              <v-text-field
-                v-model="registerModel.username"
-                :rules="emailRules"
-                label="用户名/邮箱"
-                required
-              ></v-text-field>
-
-              <v-text-field
-                v-model="registerModel.password"
-                :rules="passwordRules"
-                label="密码"
-                autocomplete="new-password"
-                type="password"
-                required
-              ></v-text-field>
-
-              <v-text-field
-                v-model="registerModel.confirmPass"
-                :rules="[passwordRules2]"
-                label="确认密码"
-                autocomplete="new-password"
-                type="password"
-                required
-              ></v-text-field>
-
-              <v-btn
-                :disabled="!valid"
-                color="success"
-                class="mr-4"
-                type="submit"
-                large
-                rounded
-              >
-                注册
-              </v-btn>
-            </v-form>
-          </v-sheet>
-        </v-bottom-sheet>
-      </div>
+      <!-- 注册成功提示 -->
     </v-content>
   </v-app>
 </template>
@@ -252,6 +266,8 @@ export default {
     isShowRegisterForm: false, //是否展示注册表单
     // isLoad: false, //是否已登录
     LoadError: false,
+    showTip: false,
+    showTipMessage: '',
     valid: false,
     lazy: false,
     drawer: null,
@@ -353,7 +369,6 @@ export default {
         let response = await this.$auth.loginWith('local', {
           data: this.loginModel
         })
-        console.log(response)
         // this.isLoad = true //修改登录状态
         //关闭表单
         this.isShowLoginForm = false
@@ -371,7 +386,6 @@ export default {
 
       try {
         let response = await this.$auth.logout('local')
-        console.log(response)
       } catch (err) {
         console.log(err)
       }
@@ -386,13 +400,26 @@ export default {
     //注册
     async register() {
       const res = await this.$axios.$post('auth/register', this.registerModel)
-      console.log(res)  
       if (res.stateCodes == '10001') {
-        alert('该账户名已被注册 请重新输入')
+        this.showTip = true
+        this.showTipMessage = '该用户名/邮箱已被注册 请使用其他账号'
+        setTimeout(() => {
+          this.showTip = false
+        }, 2000)
       } else {
         this.isShowRegisterForm = false
-        alert('注册成功 去登录吧')
+        this.showTip = true
+        this.showTipMessage = '注册成功 去登录您的账号吧'
+        setTimeout(() => {
+          this.showTip = false
+        }, 2000)
       }
+    },
+
+    //未有账号 去登录
+    noAcoToRegister() {
+      this.isShowLoginForm = false
+      this.isShowRegisterForm = true
     }
   },
   computed: {
@@ -402,3 +429,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .show-tip-message{
+    padding: 0 580px;
+  }
+</style>
