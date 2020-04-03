@@ -25,8 +25,10 @@ export default {
   data(){
     return {
       items:[
-        {src:'https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1875807258,18485981&fm=26&gp=0.jpg'},
-        {src:'https://dss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3435142851,1686079016&fm=26&gp=0.jpg'},
+        {src:'https://img3.doubanio.com/view/photo/l/public/p2565594632.webp'},
+        {src:'https://img9.doubanio.com/view/photo/l/public/p2565594636.webp'},
+        {src:'https://img9.doubanio.com/view/photo/l/public/p2565594635.webp'},
+        {src:'https://img3.doubanio.com/view/photo/l/public/p2565594631.webp'},
       ]
     }
   }

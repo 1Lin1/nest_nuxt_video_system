@@ -117,7 +117,6 @@ export default {
     async save() {
       //test
       const res = await this.$axios.$get('auth/user')
-      console.log(res._id)
       //修改个人信息
       await this.$axios.$put(`users/${res._id}`, this.profileFormModel)
 
@@ -127,7 +126,7 @@ export default {
       this.$store.state.auth.user.profileAge = this.profileFormModel.profileAge
 
       this.isEditing = !this.isEditing
-      this.valid = true
+     
       console.log(this.profileFormModel)
       this.hasSaved = true
     }

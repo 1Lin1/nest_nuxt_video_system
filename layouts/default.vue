@@ -399,8 +399,10 @@ export default {
 
     //注册
     async register() {
+      
       const res = await this.$axios.$post('auth/register', this.registerModel)
-      if (res.stateCodes == '10001') {
+     
+      if (res.statusCodes == '400') {
         this.showTip = true
         this.showTipMessage = '该用户名/邮箱已被注册 请使用其他账号'
         setTimeout(() => {

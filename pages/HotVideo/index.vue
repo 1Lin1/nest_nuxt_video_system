@@ -13,7 +13,7 @@
           </v-card-title>
 
           <v-card-subtitle>
-            {{item.name}}
+            {{item.videoDescription}}
           </v-card-subtitle>
 
           <v-card-actions>
@@ -59,7 +59,6 @@
             return {
                 courses: coursesData.data
             }
-
 
         }
     }

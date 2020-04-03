@@ -2,9 +2,10 @@
   <div>
     <v-card class="mx-auto" max-width="80%">  
       <v-img
-        src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-        height="400px"
-      ></v-img>
+        height="240"
+        src="http://pic1.win4000.com/wallpaper/2/57c4fb72098ed.jpg"
+      >
+      </v-img>
 
       <v-card-title> 欢迎您 {{ userInfo.username }} </v-card-title>
 
