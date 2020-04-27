@@ -1,5 +1,6 @@
-# nuxt_web
-
+# nuxt_web 仿YouTube视频网站
+##后台搭配nest使用
+开启 nest start admin
 > My transcendent Nuxt.js project
 
 ## Build Setup
